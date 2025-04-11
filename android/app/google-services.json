@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "385546667072",
+    "project_id": "yemae-app",
+    "storage_bucket": "yemae-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385546667072:android:af27f16557c331b9354ba5",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC514mtofulh0-RvSnLVJaNTu3LpM0WMrw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
