@@ -46,89 +46,54 @@
 
 ## 개발 단계
 
+**기호:**
+*   `[x]` : 완료 (Completed)
+*   `[~]` : 진행 중 (In Progress)
+*   `[ ]` : 예정 (Pending)
+
+---
+
 ### Phase 1: 사용자 인증 구현 (Flutter)
 
-1.  **Firebase 설정 (Flutter):**
-    *   `yemae_app/pubspec.yaml` 파일에 Firebase 관련 Flutter 패키지를 추가합니다:
-        ```yaml
-        dependencies:
-          flutter:
-            sdk: flutter
-          firebase_core: ^latest # Firebase 코어
-          firebase_auth: ^latest # Firebase 인증
-          # 나중에 추가될 것들: cloud_firestore, cloud_functions, firebase_storage, firebase_messaging
-        ```
-    *   터미널(Studio 내 터미널)에서 `flutter pub get` 실행.
-    *   Studio의 Firebase 통합 도구 또는 `flutterfire configure` 명령어를 사용하여 Flutter 앱을 Firebase 프로젝트에 연결하는 설정 파일(예: `firebase_options.dart`)을 생성/업데이트합니다.
-2.  **UI 개발 (Flutter):**
-    *   `lib` 폴더 아래에 `screens` (또는 `pages`), `widgets` 폴더 구조를 만듭니다.
-    *   `screens` 폴더에 `login_screen.dart`, `signup_screen.dart` 파일을 만듭니다.
-    *   간단한 이메일, 비밀번호 입력 필드와 버튼이 있는 UI를 구현합니다.
-3.  **Firebase Auth 연동 (Flutter):**
-    *   `main.dart`에서 Firebase를 초기화합니다 (`await Firebase.initializeApp(...)`).
-    *   `login_screen.dart`, `signup_screen.dart`에서 `FirebaseAuth.instance`를 사용하여 회원가입 (`createUserWithEmailAndPassword`) 및 로그인 (`signInWithEmailAndPassword`) 로직을 구현합니다.
-    *   로그인 상태에 따라 홈 화면 또는 로그인 화면으로 이동하는 로직을 `main.dart` 또는 별도의 `auth_wrapper.dart` 등에서 구현합니다.
-4.  **테스트:** Studio의 에뮬레이터/기기에서 앱을 실행하여 회원가입 및 로그인이 정상적으로 작동하는지 확인합니다. Firebase 콘솔의 Authentication 탭에서도 사용자 생성을 확인할 수 있습니다.
+*   **[x] 1. Firebase 설정 (Flutter)**
+    *   `[x]` `pubspec.yaml`에 Firebase 관련 패키지 추가 (`firebase_core`, `firebase_auth`)
+    *   `[x]` `flutter pub get` 실행
+    *   `[x]` Firebase 프로젝트 연결 설정 (`firebase_options.dart` 생성/업데이트)
+*   **[x] 2. UI 개발 및 Firebase Auth 연동 (Flutter)**
+    *   `[x]` `lib` 폴더 내 기본 구조 생성 (`screens`, `widgets`)
+    *   `[x]` `screens/login_screen.dart`, `screens/signup_screen.dart` 파일 생성
+    *   `[x]` 로그인/회원가입 화면 기본 UI 구현 (이메일, 비밀번호 필드, 버튼)
+    *   `[x]` `main.dart`에서 Firebase 초기화 (`Firebase.initializeApp`)
+    *   `[x]` `FirebaseAuth`를 사용한 회원가입 (`createUserWithEmailAndPassword`) 로직 구현
+    *   `[x]` `FirebaseAuth`를 사용한 로그인 (`signInWithEmailAndPassword`) 로직 구현
+    *   `[x]` 로그인 상태에 따른 화면 전환 로직 구현 (`main.dart` 또는 `auth_wrapper.dart`)
+*   **[~] 3. 테스트**
+    *   `[~]` 에뮬레이터/기기에서 회원가입 및 로그인 기능 테스트
+    *   `[ ]` Firebase 콘솔에서 사용자 생성 확인
 
 ### Phase 2: 데이터 모델링 및 기본 화면 (Firestore & Flutter)
 
-1.  **Firestore 데이터 모델링:**
-    *   앞서 논의한 ERD/PRD를 바탕으로 Firestore 컬렉션 구조를 결정합니다.
-        *   `users/{userId}` (Auth 생성 UID 사용)
-        *   `events/{eventId}`
-        *   `venues/{venueId}`
-        *   `bookings/{bookingId}`
-        *   (좌석 관리) `events/{eventId}/seats/{seatId}` (하위 컬렉션) 또는 `events/{eventId}` 문서 내 `seat_map` 필드 등
-    *   Firebase 콘솔에서 수동으로 `events` 컬렉션에 테스트용 공연 데이터 몇 개를 추가합니다. (제목, 날짜, 장소 ID 등)
-2.  **Firestore 연동 (Flutter):**
-    *   `pubspec.yaml`에 `cloud_firestore: ^latest` 추가하고 `flutter pub get` 실행.
-    *   `screens` 폴더에 `home_screen.dart` (또는 `event_list_screen.dart`), `event_detail_screen.dart` 생성.
-    *   `home_screen.dart`에서 `FirebaseFirestore.instance.collection('events').get()` 또는 `snapshots()`를 사용하여 공연 목록을 가져와 `ListView` 등으로 표시합니다.
-    *   목록 항목을 탭하면 해당 `eventId`를 가지고 `event_detail_screen.dart`로 이동하도록 구현합니다.
-    *   `event_detail_screen.dart`에서 전달받은 `eventId`로 특정 공연 문서를 가져와 상세 정보를 표시합니다.
-3.  **Firestore 보안 규칙 설정:**
-    *   Firebase 콘솔의 Firestore Rules 탭에서 기본적인 보안 규칙을 설정합니다. (예: 로그인한 사용자만 `events` 읽기 가능)
-    *   `allow read: if request.auth != null;`
-4.  **테스트:** 앱을 실행하여 Firestore에 넣은 테스트 공연 데이터가 홈 화면 목록에 잘 표시되는지, 상세 화면으로 이동하여 정보가 잘 보이는지 확인합니다.
+*   **[ ] 1. Firestore 데이터 모델링**
+    *   `[ ]` Firestore 컬렉션 구조 정의 (`users`, `events`, `venues`, `bookings`, `seats` 등)
+    *   `[ ]` Firebase 콘솔에서 테스트용 `events` 데이터 수동 추가
+*   **[ ] 2. Firestore 연동 (Flutter)**
+    *   `[ ]` `pubspec.yaml`에 `cloud_firestore` 패키지 추가 및 `flutter pub get` 실행
+    *   `[ ]` `screens/home_screen.dart`, `screens/event_detail_screen.dart` 생성
+    *   `[ ]` `home_screen`에서 Firestore `events` 컬렉션 데이터 로드 및 목록 표시
+    *   `[ ]` 목록 항목 탭 시 `event_detail_screen`으로 `eventId` 전달 및 이동 구현
+    *   `[ ]` `event_detail_screen`에서 `eventId`로 공연 상세 정보 로드 및 표시
+*   **[ ] 3. Firestore 보안 규칙 설정**
+    *   `[ ]` Firebase 콘솔에서 기본적인 Firestore 보안 규칙 설정 (예: 로그인 사용자 읽기 권한)
+*   **[ ] 4. 테스트**
+    *   `[ ]` 앱에서 테스트 공연 목록 및 상세 정보 정상 표시 확인
 
 ### Phase 3: 기본 Cloud Function 작성 (Backend - Functions)
 
-1.  **Functions 설정:**
-    *   `functions` 디렉토리로 이동합니다. (Studio 내 탐색기 사용)
-    *   `package.json` 파일에 필요한 패키지를 추가합니다 (`firebase-admin`, `firebase-functions`).
-    *   `npm install` (또는 `yarn install`) 실행.
-2.  **첫 번째 함수 작성:**
-    *   `index.js` (또는 `index.ts` - TypeScript 사용 권장) 파일에 간단한 HTTP 호출 가능 함수를 작성합니다.
-
-    ```typescript
-    // 예시: functions/src/index.ts
-    import * as functions from "firebase-functions";
-    import * as admin from "firebase-admin";
-
-    admin.initializeApp();
-
-    // 간단한 테스트 함수
-    export const helloWorld = functions.https.onRequest((request, response) => {
-      functions.logger.info("Hello logs!", {structuredData: true});
-      response.send("Hello from yemae_app backend!");
-    });
-
-    // 예매 요청 함수 (초기 버전)
-    export const requestBooking = functions.https.onCall(async (data, context) => {
-      // 인증된 사용자만 호출 가능하도록 확인 (onCall 사용 시 자동)
-      if (!context.auth) {
-        throw new functions.https.HttpsError('unauthenticated', 'User must be logged in.');
-      }
-
-      const userId = context.auth.uid;
-      const eventId = data.eventId;
-      const seatId = data.seatId;
-
-      functions.logger.info(`Booking request received: userId=${userId}, eventId=${eventId}, seatId=${seatId}`);
-
-      // TODO: 실제 Firestore 트랜잭션 로직 추가 (Phase 5)
-
-      // 임시 성공 응답
-      return { success: true, message: "Booking request received (logic pending)." };
-    });
-    ```
+*   **[ ] 1. Functions 설정**
+    *   `[ ]` `functions` 디렉토리 설정 및 필수 패키지 설치 (`firebase-admin`, `firebase-functions`, `typescript` 등)
+*   **[ ] 2. 첫 번째 함수 작성 (TypeScript 권장)**
+    *   `[ ]` `index.ts` 파일에 `initializeApp` 설정
+    *   `[ ]` 간단한 테스트용 HTTP 함수 (`helloWorld`) 작성 및 배포/테스트
+    *   `[ ]` 기본적인 예매 요청 처리 Callable Function (`requestBooking`) 구조 작성 (인증 확인 포함, 로직은 추후 구현)
+*   **[ ] 3. 테스트**
+    *   `[ ]` Firebase 에뮬레이터 또는 실제 배포 후 함수 호출 테스트
