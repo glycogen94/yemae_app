@@ -61,31 +61,32 @@
     *   `[x]` Firebase 프로젝트 연결 설정 (`firebase_options.dart` 생성/업데이트)
 *   **[x] 2. UI 개발 및 Firebase Auth 연동 (Flutter)**
     *   `[x]` `lib` 폴더 내 기본 구조 생성 (`screens`, `widgets`)
-    *   `[x]` `screens/login_screen.dart`, `screens/signup_screen.dart` 파일 생성
+    *   `[x]` `screens/login_screen.dart` 파일 생성 (회원가입 기능 포함)
     *   `[x]` 로그인/회원가입 화면 기본 UI 구현 (이메일, 비밀번호 필드, 버튼)
     *   `[x]` `main.dart`에서 Firebase 초기화 (`Firebase.initializeApp`)
     *   `[x]` `FirebaseAuth`를 사용한 회원가입 (`createUserWithEmailAndPassword`) 로직 구현
     *   `[x]` `FirebaseAuth`를 사용한 로그인 (`signInWithEmailAndPassword`) 로직 구현
-    *   `[x]` 로그인 상태에 따른 화면 전환 로직 구현 (`main.dart` 또는 `auth_wrapper.dart`)
-*   **[~] 3. 테스트**
-    *   `[~]` 에뮬레이터/기기에서 회원가입 및 로그인 기능 테스트
-    *   `[ ]` Firebase 콘솔에서 사용자 생성 확인
+    *   `[x]` 로그인 상태에 따른 화면 전환 로직 구현 (`main.dart`의 `AuthWrapper`)
+    *   `[x]` 이메일/비밀번호 필드 비어 있을 때 검증 로직 추가
+*   **[x] 3. 테스트**
+    *   `[x]` 에뮬레이터/기기에서 회원가입 및 로그인 기능 테스트 (기본 시나리오)
+    *   `[x]` Firebase 콘솔에서 사용자 생성 확인
 
 ### Phase 2: 데이터 모델링 및 기본 화면 (Firestore & Flutter)
 
-*   **[ ] 1. Firestore 데이터 모델링**
-    *   `[ ]` Firestore 컬렉션 구조 정의 (`users`, `events`, `venues`, `bookings`, `seats` 등)
-    *   `[ ]` Firebase 콘솔에서 테스트용 `events` 데이터 수동 추가
-*   **[ ] 2. Firestore 연동 (Flutter)**
-    *   `[ ]` `pubspec.yaml`에 `cloud_firestore` 패키지 추가 및 `flutter pub get` 실행
-    *   `[ ]` `screens/home_screen.dart`, `screens/event_detail_screen.dart` 생성
-    *   `[ ]` `home_screen`에서 Firestore `events` 컬렉션 데이터 로드 및 목록 표시
-    *   `[ ]` 목록 항목 탭 시 `event_detail_screen`으로 `eventId` 전달 및 이동 구현
-    *   `[ ]` `event_detail_screen`에서 `eventId`로 공연 상세 정보 로드 및 표시
-*   **[ ] 3. Firestore 보안 규칙 설정**
-    *   `[ ]` Firebase 콘솔에서 기본적인 Firestore 보안 규칙 설정 (예: 로그인 사용자 읽기 권한)
-*   **[ ] 4. 테스트**
-    *   `[ ]` 앱에서 테스트 공연 목록 및 상세 정보 정상 표시 확인
+*   **[x] 1. Firestore 데이터 모델링**
+    *   `[x]` Firestore 컬렉션 구조 정의 (`users`, `events`, `venues`, `bookings`, `seats` 등) -> 우선 `events` 시작
+    *   `[x]` Firebase 콘솔에서 테스트용 `events` 데이터 수동 추가
+*   **[x] 2. Firestore 연동 (Flutter)**
+    *   `[x]` `pubspec.yaml`에 `cloud_firestore` 패키지 추가 및 `flutter pub get` 실행
+    *   `[x]` `screens/home_screen.dart`, `screens/event_detail_screen.dart` 생성/수정
+    *   `[x]` `home_screen`에서 Firestore `events` 컬렉션 데이터 로드 및 목록 표시
+    *   `[x]` 목록 항목 탭 시 `event_detail_screen`으로 `eventId` 전달 및 이동 구현
+    *   `[x]` `event_detail_screen`에서 `eventId`로 공연 상세 정보 로드 및 표시
+*   **[x] 3. Firestore 보안 규칙 설정**
+    *   `[]` Firebase 콘솔에서 기본적인 Firestore 보안 규칙 설정 (예: 로그인 사용자 읽기 권한)
+*   **[x] 4. 테스트**
+    *   `[x]` 앱에서 테스트 공연 목록 및 상세 정보 정상 표시 확인
 
 ### Phase 3: 기본 Cloud Function 작성 (Backend - Functions)
 

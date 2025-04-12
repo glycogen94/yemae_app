@@ -2,6 +2,17 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Allow logged-in users to read events
+    match /events/{eventId} {
+      allow get, list: if request.auth != null;
+      // Keep writes disallowed for now
+      allow write: if false;
+    }
+
+    // Add rules for other collections (users, bookings, etc.) later
+    // For now, deny access to other potential paths
+    // Note: This default rule must come AFTER specific rules like /events/{eventId}
     match /{document=**} {
       allow read, write: if false;
     }
