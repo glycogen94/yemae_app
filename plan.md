@@ -84,17 +84,17 @@
     *   `[x]` 목록 항목 탭 시 `event_detail_screen`으로 `eventId` 전달 및 이동 구현
     *   `[x]` `event_detail_screen`에서 `eventId`로 공연 상세 정보 로드 및 표시
 *   **[x] 3. Firestore 보안 규칙 설정**
-    *   `[]` Firebase 콘솔에서 기본적인 Firestore 보안 규칙 설정 (예: 로그인 사용자 읽기 권한)
+    *   `[x]` Firebase 콘솔에서 기본적인 Firestore 보안 규칙 설정 (예: 로그인 사용자 읽기 권한)
 *   **[x] 4. 테스트**
     *   `[x]` 앱에서 테스트 공연 목록 및 상세 정보 정상 표시 확인
 
 ### Phase 3: 기본 Cloud Function 작성 (Backend - Functions)
 
-*   **[ ] 1. Functions 설정**
-    *   `[ ]` `functions` 디렉토리 설정 및 필수 패키지 설치 (`firebase-admin`, `firebase-functions`, `typescript` 등)
+*   **[x] 1. Functions 설정**
+    *   `[x]` `functions` 디렉토리 설정 및 필수 패키지 설치 (`firebase-admin`, `firebase-functions`, `typescript` 등)
 *   **[ ] 2. 첫 번째 함수 작성 (TypeScript 권장)**
-    *   `[ ]` `index.ts` 파일에 `initializeApp` 설정
-    *   `[ ]` 간단한 테스트용 HTTP 함수 (`helloWorld`) 작성 및 배포/테스트
-    *   `[ ]` 기본적인 예매 요청 처리 Callable Function (`requestBooking`) 구조 작성 (인증 확인 포함, 로직은 추후 구현)
+    *   `[x]` `index.ts` 파일에 `initializeApp` 설정
+    *   `[x]` 간단한 테스트용 HTTP 함수 (`helloWorld`) 작성 및 배포/테스트
+    *   `[x]` 기본적인 예매 요청 처리 Callable Function (`requestBooking`) 구조 작성 (인증 확인 포함, 로직은 추후 구현)
 *   **[ ] 3. 테스트**
     *   `[ ]` Firebase 에뮬레이터 또는 실제 배포 후 함수 호출 테스트
